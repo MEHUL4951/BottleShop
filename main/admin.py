@@ -13,7 +13,6 @@ class ColorAdmin(admin.ModelAdmin):
 admin.site.register(Color,ColorAdmin)
 
 
-
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id','title','brand','color','size','status','is_featured','category')
     list_editable = ('status','is_featured')

@@ -8,7 +8,7 @@
 	<script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'bs4/bootstrap.min.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'custom.css' %}" />
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src=" https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
@@ -34,7 +34,7 @@
 		        <a class="nav-link text-white" href="{% url 'category-list' %}">Categories</a>
 		      </li>
 			  <li class="nav-item">
-				<a class="nav-link text-white" href="{% url 'brand-list' %}">Brands</a>
+				<a class="nav-link text-white" href="{% url 'brand-list' %}">brands</a>
 		      </li>
 			  <li class="nav-item">
 		        <a class="nav-link text-white" href="{%url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart (<span class="cart-list">{{request.session.cartdata|length}}</span>)</a>
