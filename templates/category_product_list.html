@@ -44,7 +44,6 @@ $(document).ready(function(){
         var _index = $(this).attr('data-index');
         var _qty = $(".product-qty-"+_index).val();
         let qty = parseInt(_qty);
-        console.log(qty);
         if(qty <= 0){
             window.alert("enter the valid quatity");
             return;

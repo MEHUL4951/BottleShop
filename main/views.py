@@ -31,6 +31,7 @@ def brand_list(request):
     context = {'data': brand}
     return render(request,'brand_list.html',context)
 #product_list
+
 def product_list(request):
     data= Product.objects.all().order_by('-id')
     context = { 'data': data,
@@ -62,12 +63,21 @@ def product_detail(request,slug,id):
     related_product = Product.objects.filter(category=product.category).exclude(id=id)[:4]
     reviewForm = ReviewAdd()
     canAdd = True
-  
+    reviewcnt = ProductReview.objects.filter(product = product).count()
+    sum = 0
+    review = ProductReview.objects.filter(product = product)
+    for item in review:
+        review_rating = item.review_rating
+        sum = sum + int(review_rating)
+    if reviewcnt > 0:
+        avg = sum/reviewcnt
+    else:
+        avg = 0.0
     if request.user.is_authenticated:
         reviewCheck = ProductReview.objects.filter(user = request.user,product = product).count()
         if reviewCheck > 0:
             canAdd = False
-    reviews = ProductReview.objects.filter(product = product)
+    reviews = ProductReview.objects.filter(user = request.user,product = product)
 
     
 
@@ -76,7 +86,7 @@ def product_detail(request,slug,id):
                'reviewForm':reviewForm,
                 'canAdd' : canAdd,
                 'reviews':reviews,
-              
+                'avg':avg   
             }
     return render(request,'product_detail.html',context)
 
@@ -118,10 +128,12 @@ def cart_list(request):
     if 'cartdata' in request.session:
         for p_id , items in request.session['cartdata'].items():
             total_amt += int(items['qty']) * float(items['price'])       
+
         context = {
             'cart_data':request.session['cartdata'],
             'totalitems':len(request.session['cartdata']),
-            'total_amt':total_amt
+            'total_amt':total_amt,
+           
 
         }
     return render(request,'cart.html',context)
@@ -208,6 +220,9 @@ def checkout(request):
                 price = items['price'],
                 total = float(items['qty'])*float(items['price'])
             )
+
+
+            
         host = request.get_host()
         paypal_dict = {
                 'business': settings.PAYPAL_RECEIVER_EMAIL,
@@ -270,6 +285,7 @@ def my_dashboard(request):
     orders = CartOrder.objects.annotate(month=ExtractMonth('order_dt')).values(
         'month'
     ).annotate(count=Count('id')).values('month','count')
+    
     monthNumber = []
     totalOrders = []
     for d in orders:

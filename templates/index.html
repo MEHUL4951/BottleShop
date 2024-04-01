@@ -5,11 +5,11 @@
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     {% for banner in banners %}
-    {% if forloop.counter == 1 %}
+     {% if forloop.counter == 1 %}
     <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter}}" class="active"></li>
-    {% else %}
+    {% else %} 
     <li data-target="#carouselExampleIndicators" data-slide-to="{{forloop.counter}}"></li>
-    {% endif %}
+     {% endif %} 
     {% endfor %}
   </ol>
   <div class="carousel-inner">
@@ -34,7 +34,7 @@
 </div>
 </div>
 <main class="container my-4">
-	<!-- Featured Products -->
+  
 	<h3 class="my-4 border-bottom pb-1">Featured Products</h3>
 	<div class="row">
     {% for product in data %}
